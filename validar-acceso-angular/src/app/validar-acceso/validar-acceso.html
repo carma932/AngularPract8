@@ -1,9 +1,47 @@
-<div class="pase">
-  <h1>Puede Entrar</h1>
-  <form(ngSubmit) = "onValidar()">
-    <label>
-      Edad
-      <input type="number" name="edad" [(ngModel)]="edad" required/>
-    </label>
-  </form>
+<div class="listado-usuarios">
+  <h2>Registrar Usuario</h2>
+
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="email" name="email">
+  </div>
+
+  <button (click)="onGuardar()" [disabled]="guardando">
+    {{ guardando ? 'Guardando...' : 'Guardar Usuario' }}
+  </button>
+
+  <p class="mensaje" *ngIf="mensajeGuardado">{{ mensajeGuardado }}</p>
+
+  <hr>
+
+  <h2>Listado de Usuarios</h2>
+
+  <p *ngIf="cargando">Cargando...</p>
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <table *ngIf="!cargando && usuarios.length > 0">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Rol</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.id }}</td>
+      <td>{{ usuario.nombre }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>{{ usuario.rol }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && usuarios.length === 0 && !error">No hay usuarios registrados.</p>
 </div>
